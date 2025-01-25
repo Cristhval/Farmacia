@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<h1>Bienvenido al Sistema de Gestión de Farmacia</h1>
+<p>Elige una opción para acceder a las funcionalidades del sistema:</p>
+
+<ul class="list-group">
+    <li class="list-group-item"><a href="{% url 'lista_clientes' %}">Gestión de Clientes</a></li>
+    <li class="list-group-item"><a href="{% url 'lista_empleados' %}">Gestión de Empleados</a></li>
+    <li class="list-group-item"><a href="{% url 'lista_sucursales' %}">Gestión de Sucursales</a></li>
+    <li class="list-group-item"><a href="{% url 'lista_pedidos' %}">Gestión de Pedidos</a></li>
+</ul>
+{% endblock %}

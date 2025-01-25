@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Detalle del Pedido{% endblock %}
+
+{% block content %}
+<h1>Detalle del Pedido</h1>
+<p><strong>ID:</strong> {{ pedido.id }}</p>
+<p><strong>Cliente:</strong> {{ pedido.cliente.nombre }}</p>
+<p><strong>Sucursal Origen:</strong> {{ pedido.sucursal_origen.nombre }}</p>
+<p><strong>Sucursal Destino:</strong> {{ pedido.sucursal_destino.nombre }}</p>
+<p><strong>Estado:</strong> {{ pedido.estado }}</p>
+
+<h2>Productos</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto_pedido in pedido.pedidoproducto_set.all %}
+        <tr>
+            <td>{{ producto_pedido.producto.nombre }}</td>
+            <td>{{ producto_pedido.cantidad }}</td>
+            <td>${{ producto_pedido.producto.precio }}</td>
+            <!-- Aquí calculamos el subtotal -->
+            <td>${{ producto_pedido.cantidad|multiply:producto_pedido.producto.precio }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
