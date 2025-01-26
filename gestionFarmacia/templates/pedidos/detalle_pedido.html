@@ -9,7 +9,24 @@
 <p><strong>Cliente:</strong> {{ pedido.cliente.nombre }}</p>
 <p><strong>Sucursal Origen:</strong> {{ pedido.sucursal_origen.nombre }}</p>
 <p><strong>Sucursal Destino:</strong> {{ pedido.sucursal_destino.nombre }}</p>
-<p><strong>Estado:</strong> {{ pedido.estado }}</p>
+<p><strong>Estado:</strong>
+    <span class="badge
+        {% if pedido.estado == 'PENDIENTE' %}badge-warning
+        {% elif pedido.estado == 'EN_TRANSITO' %}badge-info
+        {% elif pedido.estado == 'ENTREGADO' %}badge-success
+        {% elif pedido.estado == 'CANCELADO' %}badge-danger
+        {% else %}badge-secondary{% endif %}">{{ pedido.estado }}
+    </span>
+</p>
+
+<!-- Nueva sección: Opción de Entrega -->
+<p><strong>Opción de Entrega:</strong>
+    {% if pedido.opcion_entrega == "RETIRO_SUCURSAL" %}
+        Retiro en Sucursal
+    {% elif pedido.opcion_entrega == "ENVIO_DESTINO" %}
+        Envío a Sucursal de Destino
+    {% endif %}
+</p>
 
 <h2>Productos</h2>
 <table class="table">
@@ -27,10 +44,25 @@
             <td>{{ producto_pedido.producto.nombre }}</td>
             <td>{{ producto_pedido.cantidad }}</td>
             <td>${{ producto_pedido.producto.precio }}</td>
-            <!-- Aquí calculamos el subtotal -->
             <td>${{ producto_pedido.cantidad|multiply:producto_pedido.producto.precio }}</td>
         </tr>
         {% endfor %}
     </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3">Total</th>
+            <th>${{ pedido.calcular_total }}</th>
+        </tr>
+    </tfoot>
 </table>
+
+<!-- Botón para confirmar el pedido -->
+{% if pedido.estado == "PENDIENTE" %}
+<form action="{% url 'confirmar_pedido' pedido.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Confirmar Pedido</button>
+</form>
+{% else %}
+<p class="text-muted">Este pedido ya ha sido confirmado.</p>
+{% endif %}
 {% endblock %}

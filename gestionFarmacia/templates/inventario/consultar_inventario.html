@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventario de {{ sucursal.nombre }}{% endblock %}
+
+{% block content %}
+<h1>Inventario de {{ sucursal.nombre }}</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in inventario %}
+        <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Botón para transferir productos -->
+<a href="{% url 'transferir_producto' sucursal.id %}" class="btn btn-primary">Transferir Producto</a>
+{% endblock %}

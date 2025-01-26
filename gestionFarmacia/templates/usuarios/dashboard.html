@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Usuario{% endblock %}
+
+{% block content %}
+<h1>Bienvenido, {{ user.username }}</h1>
+
+{% if user.rol == "ADMIN" %}
+<h2>Opciones de Administrador</h2>
+<ul>
+    <li><a href="{% url 'admin:index' %}">Ir al Panel de Administración</a></li>
+    <li><a href="{% url 'inventario:consultar_inventario' %}">Gestionar Inventarios</a></li>
+</ul>
+
+{% elif user.rol == "EMPLEADO" %}
+<h2>Opciones de Empleado</h2>
+<ul>
+    <li><a href="{% url 'pedidos:lista_pedidos' %}">Gestionar Pedidos</a></li>
+</ul>
+
+{% elif user.rol == "CLIENTE" %}
+<h2>Opciones de Cliente</h2>
+<ul>
+    <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
+    <li><a href="{% url 'usuarios:perfil' %}">Ver Perfil</a></li>
+</ul>
+
+{% else %}
+<p>No tienes un rol asignado.</p>
+{% endif %}
+{% endblock %}

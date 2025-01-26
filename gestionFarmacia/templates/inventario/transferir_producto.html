@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Transferir Producto{% endblock %}
+
+{% block content %}
+<h1>Transferir Producto desde {{ sucursal_origen.nombre }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="producto">Producto:</label>
+        <select name="producto" id="producto">
+            {% for producto in productos %}
+            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" required min="1">
+    </div>
+
+    <div>
+        <label for="sucursal_destino">Sucursal Destino:</label>
+        <select name="sucursal_destino" id="sucursal_destino">
+            {% for sucursal in sucursales %}
+            <option value="{{ sucursal.id }}">{{ sucursal.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Transferir</button>
+</form>
+{% endblock %}

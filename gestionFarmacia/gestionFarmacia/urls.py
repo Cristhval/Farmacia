@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from usuarios import views as usuarios_views
-from inventario import views as inventario_views, views
+from inventario import views as inventario_views
 from pedidos import views as pedidos_views
-from gestionFarmacia import views as main_views  # Importar vistas generales
+from gestionFarmacia import views as main_views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,9 +28,22 @@ urlpatterns = [
     path('clientes/', usuarios_views.lista_clientes, name='lista_clientes'),
     path('empleados/', usuarios_views.lista_empleados, name='lista_empleados'),
     path('sucursales/', inventario_views.lista_sucursales, name='lista_sucursales'),
+
+    # Rutas de pedidos
     path('pedidos/<int:pedido_id>/', pedidos_views.detalle_pedido, name='detalle_pedido'),
     path('pedidos/', pedidos_views.lista_pedidos, name='lista_pedidos'),
-    path('productos/', views.lista_productos, name='lista_productos'),
+    path('<int:pedido_id>/confirmar/', pedidos_views.confirmar_pedido, name='confirmar_pedido'),
+    path('crear/', pedidos_views.crear_pedido, name='crear_pedido'),
 
+    # Rutas de inventario
+    path('productos/', inventario_views.lista_productos, name='lista_productos'),
+    path('inventario/<int:sucursal_id>/', inventario_views.consultar_inventario, name='consultar_inventario'),
+    path('transferir/<int:sucursal_id>/', inventario_views.transferir_producto, name='transferir_producto'),
+
+    # Rutas de autenticación
+    path('login/', auth_views.LoginView.as_view(template_name='usuarios/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('registro/', usuarios_views.registro, name='registro'),
+    path('dashboard/', usuarios_views.dashboard, name='dashboard'),
+    path('perfil/', usuarios_views.perfil, name='perfil'),
 ]
-
