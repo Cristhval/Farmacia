@@ -11,15 +11,17 @@
             <th>Email</th>
             <th>Teléfono</th>
             <th>Rol</th>
+            <th>Puesto</th>
         </tr>
     </thead>
     <tbody>
         {% for empleado in empleados %}
         <tr>
-            <td>{{ empleado.nombre }}</td>
-            <td>{{ empleado.email }}</td>
-            <td>{{ empleado.telefono }}</td>
-            <td>{{ empleado.rol }}</td>
+            <td>{{ empleado.usuario.first_name }} {{ empleado.usuario.last_name }}</td>
+            <td>{{ empleado.usuario.email }}</td>
+            <td>{{ empleado.usuario.telefono }}</td>
+            <td>{{ empleado.usuario.get_rol_display }}</td>
+            <td>{{ empleado.puesto }}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -49,3 +49,10 @@ def crear_pedido(request):
     productos = Producto.objects.all()  # Para seleccionar productos en la interfaz
     return render(request, 'pedidos/crear_pedido.html', {'form': form, 'productos': productos})
 
+def mis_pedidos(request):
+    """
+    Vista para listar los pedidos de un cliente autenticado.
+    """
+    pedidos = Pedido.objects.filter(cliente=request.user.cliente)  # Filtra los pedidos del cliente autenticado
+    return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos})
+

@@ -33,6 +33,7 @@ class ClienteAdmin(admin.ModelAdmin):
     """
     list_display = ('usuario', 'direccion')
     search_fields = ('usuario__username', 'usuario__email', 'direccion')
+    autocomplete_fields = ('usuario',)  # Agrega un campo de autocompletar para usuarios
 
 
 @admin.register(Empleado)
@@ -42,3 +43,4 @@ class EmpleadoAdmin(admin.ModelAdmin):
     """
     list_display = ('usuario', 'puesto')
     search_fields = ('usuario__username', 'usuario__email', 'puesto')
+    autocomplete_fields = ('usuario',)  # Agrega un campo de autocompletar para usuarios

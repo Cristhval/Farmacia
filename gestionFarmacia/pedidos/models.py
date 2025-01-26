@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+
+
 from inventario.models import Inventario
 
 
@@ -24,6 +26,7 @@ class Pedido(models.Model):
     estado = models.CharField(max_length=20, choices=ESTADOS, default='PENDIENTE')
     productos = models.ManyToManyField('inventario.Producto', through='PedidoProducto')
     opcion_entrega = models.CharField(max_length=20, choices=OPCIONES_ENTREGA, default='RETIRO_SUCURSAL')
+
 
     def actualizar_estado(self, nuevo_estado):
         self.estado = nuevo_estado

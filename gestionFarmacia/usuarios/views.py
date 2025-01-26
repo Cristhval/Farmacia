@@ -1,36 +1,37 @@
 from django.contrib.auth.decorators import login_required
-
-from .models import Cliente, Empleado, Usuario
+from .models import Cliente, Empleado
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from .forms import RegistroUsuarioForm
+
 def lista_clientes(request):
-    clientes = Cliente.objects.all()
+    """
+    Vista para listar clientes.
+    """
+    # Optimiza la consulta cargando la relación con Usuario en una sola consulta SQL
+    clientes = Cliente.objects.select_related('usuario').all()
     return render(request, 'usuarios/lista_clientes.html', {'clientes': clientes})
 
 
 def lista_empleados(request):
-    empleados = Empleado.objects.all()
+    """
+    Vista para listar empleados.
+    """
+    empleados = Empleado.objects.select_related('usuario').all()
     return render(request, 'usuarios/lista_empleados.html', {'empleados': empleados})
 
 
 def registro(request):
-    """
-    Vista para registrar nuevos usuarios.
-    """
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            usuario = form.save(commit=False)
-            # Puedes asignar un rol predeterminado, por ejemplo, CLIENTE
-            usuario.rol = 'CLIENTE'
-            usuario.save()
+            form.save()
             messages.success(request, 'Usuario registrado con éxito. ¡Ahora puedes iniciar sesión!')
-            return redirect('login')
+            return redirect('login')  # Redirige al login después del registro
         else:
             messages.error(request, 'Hubo un error en el registro. Verifica los datos ingresados.')
     else:
-        form = UserCreationForm()
+        form = RegistroUsuarioForm()
     return render(request, 'usuarios/registro.html', {'form': form})
 
 @login_required

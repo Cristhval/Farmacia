@@ -1,4 +1,4 @@
-from .models import Sucursal, Producto
+from .models import Sucursal, Producto, Inventario
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
@@ -12,12 +12,21 @@ def lista_productos(request):
     return render(request, 'inventario/lista_productos.html', {'productos': productos})
 
 
-def consultar_inventario(request, sucursal_id):
-    sucursal = get_object_or_404(Sucursal, id=sucursal_id)
-    inventario = sucursal.consultar_inventario()
-    return render(request, 'inventario/consultar_inventario.html', {'sucursal': sucursal, 'inventario': inventario})
+def consultar_inventario(request, sucursal_id=None):
+    if sucursal_id:
+        sucursal = get_object_or_404(Sucursal, id=sucursal_id)
+        inventario = sucursal.inventario.all()
+        titulo = f"Inventario de {sucursal.nombre}"
+    else:
+        sucursal = None
+        inventario = Inventario.objects.select_related('sucursal', 'producto').all()
+        titulo = "Inventario de Todas las Sucursales"
 
-
+    return render(request, 'inventario/consultar_inventario.html', {
+        'inventario': inventario,
+        'sucursal': sucursal,
+        'titulo': titulo,
+    })
 def transferir_producto(request, sucursal_id):
     """
     Vista para transferir productos entre sucursales.
