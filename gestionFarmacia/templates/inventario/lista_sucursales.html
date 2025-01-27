@@ -9,6 +9,7 @@
         <tr>
             <th>Nombre</th>
             <th>Dirección</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +17,9 @@
         <tr>
             <td>{{ sucursal.nombre }}</td>
             <td>{{ sucursal.direccion }}</td>
+            <td>
+                <a href="{% url 'consultar_inventario_por_sucursal' sucursal.id %}" class="btn btn-primary">Ver Inventario</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

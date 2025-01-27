@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<h1>{{ titulo }}</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sucursal</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in inventario %}
+        <tr>
+            <td>{{ item.sucursal.nombre }}</td>
+            <td>{{ item.producto.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% if sucursal %}
+    <a href="{% url 'transferir_producto' sucursal.id %}" class="btn btn-primary">Transferir Producto</a>
+{% endif %}
+{% endblock %}
