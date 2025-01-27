@@ -13,25 +13,25 @@
 <p>Elige una opción para acceder a las funcionalidades del sistema:</p>
 
 <ul class="list-group">
-    <!-- Rutas de usuarios -->
+
     <li class="list-group-item"><a href="{% url 'lista_clientes' %}">Gestión de Clientes</a></li>
     <li class="list-group-item"><a href="{% url 'lista_empleados' %}">Gestión de Empleados</a></li>
     <li class="list-group-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
     <li class="list-group-item"><a href="{% url 'perfil' %}">Perfil de Usuario</a></li>
     <li class="list-group-item"><a href="{% url 'registro' %}">Registrar Usuario</a></li>
 
-    <!-- Rutas de inventario -->
+
     <li class="list-group-item"><a href="{% url 'lista_sucursales' %}">Gestión de Sucursales</a></li>
     <li class="list-group-item"><a href="{% url 'lista_productos' %}">Gestión de Productos</a></li>
     <li class="list-group-item"><a href="{% url 'consultar_inventario_por_sucursal' sucursal_id=1 %}">Consultar Inventario</a></li>
     <li class="list-group-item"><a href="{% url 'transferir_producto' sucursal_id=1 %}">Transferir Producto</a></li>
 
-    <!-- Rutas de pedidos -->
+
     <li class="list-group-item"><a href="{% url 'lista_pedidos' %}">Gestión de Pedidos</a></li>
     <li class="list-group-item"><a href="{% url 'crear_pedido' %}">Crear Pedido</a></li>
     <li class="list-group-item"><a href="{% url 'mis_pedidos' %}">Mis Pedidos</a></li>
 
-    <!-- Autenticación -->
+
     {% if user.is_authenticated %}
         <li class="list-group-item">
             <form method="post" action="{% url 'logout' %}" style="display:inline;">

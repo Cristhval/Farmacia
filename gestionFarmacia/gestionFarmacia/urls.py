@@ -23,34 +23,34 @@ from gestionFarmacia import views as main_views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # Administración
+
     path('admin/', admin.site.urls),
 
-    # Página principal
+
     path('', main_views.home, name='home'),
 
-    # Rutas de usuarios
+
     path('clientes/', usuarios_views.lista_clientes, name='lista_clientes'),
     path('empleados/', usuarios_views.lista_empleados, name='lista_empleados'),
     path('dashboard/', usuarios_views.dashboard, name='dashboard'),
     path('perfil/', usuarios_views.perfil, name='perfil'),
     path('registro/', usuarios_views.registro, name='registro'),
 
-    # Rutas de inventario
+
     path('sucursales/', inventario_views.lista_sucursales, name='lista_sucursales'),
     path('productos/', inventario_views.lista_productos, name='lista_productos'),
     path('inventario/', inventario_views.consultar_inventario, name='consultar_inventario'),
     path('inventario/<int:sucursal_id>/', inventario_views.consultar_inventario, name='consultar_inventario_por_sucursal'),
     path('transferir/<int:sucursal_id>/', inventario_views.transferir_producto, name='transferir_producto'),
 
-    # Rutas de pedidos
+
     path('pedidos/', pedidos_views.lista_pedidos, name='lista_pedidos'),
     path('pedidos/<int:pedido_id>/', pedidos_views.detalle_pedido, name='detalle_pedido'),
     path('pedidos/<int:pedido_id>/confirmar/', pedidos_views.confirmar_pedido, name='confirmar_pedido'),
     path('pedidos/crear/', pedidos_views.crear_pedido, name='crear_pedido'),
     path('pedidos/mis_pedidos/', pedidos_views.mis_pedidos, name='mis_pedidos'),
 
-    # Autenticación
+
     path('login/', auth_views.LoginView.as_view(template_name='usuarios/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/login/'), name='logout'),
 ]

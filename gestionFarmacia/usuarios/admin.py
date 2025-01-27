@@ -4,9 +4,7 @@ from .models import Usuario, Cliente, Empleado
 
 @admin.register(Usuario)
 class UsuarioAdmin(UserAdmin):
-    """
-    Configuración del modelo Usuario personalizado en el panel de administración.
-    """
+
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Información Personal', {'fields': ('cedula', 'first_name', 'last_name', 'email', 'telefono')}),
@@ -28,19 +26,15 @@ class UsuarioAdmin(UserAdmin):
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
-    """
-    Configuración del modelo Cliente en el panel de administración.
-    """
+
     list_display = ('usuario', 'direccion')
     search_fields = ('usuario__username', 'usuario__email', 'direccion')
-    autocomplete_fields = ('usuario',)  # Agrega un campo de autocompletar para usuarios
+    autocomplete_fields = ('usuario',)
 
 
 @admin.register(Empleado)
 class EmpleadoAdmin(admin.ModelAdmin):
-    """
-    Configuración del modelo Empleado en el panel de administración.
-    """
+
     list_display = ('usuario', 'puesto')
     search_fields = ('usuario__username', 'usuario__email', 'puesto')
-    autocomplete_fields = ('usuario',)  # Agrega un campo de autocompletar para usuarios
+    autocomplete_fields = ('usuario',)

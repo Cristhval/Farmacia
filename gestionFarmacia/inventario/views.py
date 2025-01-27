@@ -28,9 +28,7 @@ def consultar_inventario(request, sucursal_id=None):
         'titulo': titulo,
     })
 def transferir_producto(request, sucursal_id):
-    """
-    Vista para transferir productos entre sucursales.
-    """
+
     sucursal_origen = get_object_or_404(Sucursal, id=sucursal_id)
 
     if request.method == 'POST':

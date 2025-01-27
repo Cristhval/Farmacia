@@ -19,7 +19,7 @@
     </span>
 </p>
 
-<!-- Nueva sección: Opción de Entrega -->
+
 <p><strong>Opción de Entrega:</strong>
     {% if pedido.opcion_entrega == "RETIRO_SUCURSAL" %}
         Retiro en Sucursal
@@ -56,7 +56,7 @@
     </tfoot>
 </table>
 
-<!-- Botón para confirmar el pedido -->
+
 {% if pedido.estado == "PENDIENTE" %}
 <form action="{% url 'confirmar_pedido' pedido.id %}" method="post">
     {% csrf_token %}

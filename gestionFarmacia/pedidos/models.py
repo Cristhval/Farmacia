@@ -39,10 +39,7 @@ class Pedido(models.Model):
         return total
 
     def validar_stock(self):
-        """
-        Verifica si hay suficiente stock para cada producto en el pedido.
-        Lanza una excepción si algún producto no tiene suficiente stock.
-        """
+
         for producto_pedido in self.pedidoproducto_set.all():
             inventario = Inventario.objects.filter(
                 sucursal=self.sucursal_origen,
@@ -54,13 +51,10 @@ class Pedido(models.Model):
                 )
 
     def confirmar_venta(self):
-        """
-        Confirma la venta actualizando el stock del inventario.
-        """
-        # Valida si hay suficiente stock antes de confirmar
+
         self.validar_stock()
 
-        # Actualiza el inventario
+
         for producto_pedido in self.pedidoproducto_set.all():
             inventario = Inventario.objects.get(
                 sucursal=self.sucursal_origen,
@@ -69,7 +63,7 @@ class Pedido(models.Model):
             inventario.cantidad -= producto_pedido.cantidad
             inventario.save()
 
-        # Cambia el estado del pedido según la opción de entrega
+
         if self.opcion_entrega == 'RETIRO_SUCURSAL':
             self.actualizar_estado('LISTO_PARA_RETIRO')
         elif self.opcion_entrega == 'ENVIO_DESTINO':

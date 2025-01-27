@@ -4,9 +4,7 @@ from django.db import models
 
 
 class Usuario(AbstractUser):
-    """
-    Modelo personalizado de usuario basado en AbstractUser.
-    """
+
     cedula = models.CharField(max_length=20, unique=True, blank=True, null=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
     direccion = models.CharField(max_length=255, blank=True, null=True)
@@ -23,9 +21,7 @@ class Usuario(AbstractUser):
 
 
 class Cliente(models.Model):
-    """
-    Modelo para gestionar información adicional de clientes.
-    """
+
     usuario = models.OneToOneField(
         get_user_model(),
         on_delete=models.CASCADE
@@ -45,9 +41,7 @@ class Cliente(models.Model):
 
 
 class Empleado(models.Model):
-    """
-    Modelo para gestionar información adicional de empleados.
-    """
+
     usuario = models.OneToOneField(
         get_user_model(),
         on_delete=models.CASCADE
