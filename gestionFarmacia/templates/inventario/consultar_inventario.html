@@ -3,8 +3,23 @@
 {% block title %}{{ titulo }}{% endblock %}
 
 {% block content %}
-<h1>{{ titulo }}</h1>
-<table class="table">
+<h1 class="text-center">{{ titulo }}</h1>
+
+
+<form method="get" action="{% url 'consultar_inventario' %}" class="mb-3">
+    <label for="sucursal">Seleccionar Sucursal:</label>
+    <select id="sucursal" name="sucursal_id" class="form-select" onchange="this.form.submit()">
+        <option value="">Inventario General</option>
+        {% for s in sucursales %}
+            <option value="{{ s.id }}" {% if sucursal and s.id == sucursal.id %}selected{% endif %}>
+                {{ s.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Sucursal</th>
@@ -19,10 +34,17 @@
             <td>{{ item.producto.nombre }}</td>
             <td>{{ item.cantidad }}</td>
         </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center">No hay productos en esta sucursal.</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
+
+
 {% if sucursal %}
     <a href="{% url 'transferir_producto' sucursal.id %}" class="btn btn-primary">Transferir Producto</a>
 {% endif %}
+
 {% endblock %}

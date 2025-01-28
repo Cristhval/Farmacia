@@ -31,10 +31,9 @@ def crear_pedido(request):
         form = PedidoForm(request.POST)
         if form.is_valid():
             pedido = form.save()
-
-
             productos = request.POST.getlist('productos')
             cantidades = request.POST.getlist('cantidades')
+
             for producto_id, cantidad in zip(productos, cantidades):
                 producto = Producto.objects.get(id=producto_id)
                 PedidoProducto.objects.create(pedido=pedido, producto=producto, cantidad=cantidad)
@@ -49,4 +48,5 @@ def crear_pedido(request):
 def mis_pedidos(request):
     pedidos = Pedido.objects.filter(cliente=request.user.cliente)
     return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos})
+
 
