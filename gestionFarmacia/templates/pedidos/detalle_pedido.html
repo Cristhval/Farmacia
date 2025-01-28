@@ -6,16 +6,17 @@
 {% block content %}
 <h1>Detalle del Pedido</h1>
 <p><strong>ID:</strong> {{ pedido.id }}</p>
-<p><strong>Cliente:</strong> {{ pedido.cliente.nombre }}</p>
+<p><strong>Cliente:</strong> {{ pedido.cliente.usuario.first_name }} {{ pedido.cliente.usuario.last_name }}</p>
 <p><strong>Sucursal Origen:</strong> {{ pedido.sucursal_origen.nombre }}</p>
 <p><strong>Sucursal Destino:</strong> {{ pedido.sucursal_destino.nombre }}</p>
 <p><strong>Estado:</strong>
     <span class="badge
-        {% if pedido.estado == 'PENDIENTE' %}badge-warning
-        {% elif pedido.estado == 'EN_TRANSITO' %}badge-info
-        {% elif pedido.estado == 'ENTREGADO' %}badge-success
-        {% elif pedido.estado == 'CANCELADO' %}badge-danger
-        {% else %}badge-secondary{% endif %}">{{ pedido.estado }}
+        {% if pedido.estado == 'PENDIENTE' %}bg-warning
+        {% elif pedido.estado == 'EN_TRANSITO' %}bg-info
+        {% elif pedido.estado == 'ENTREGADO' %}bg-success
+        {% elif pedido.estado == 'CANCELADO' %}bg-danger
+        {% else %}bg-secondary{% endif %}">
+        {{ pedido.estado }}
     </span>
 </p>
 
